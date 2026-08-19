@@ -8,6 +8,7 @@ const Dashboard = {
     this.updateUserInfo();
     this.loadSettings();
     this.setupChildrenButtons();
+    Payment.loadSubscription();
     // Load schools for child forms
     if (State.schools.length === 0) {
       try {

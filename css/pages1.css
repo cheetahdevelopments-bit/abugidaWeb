@@ -385,6 +385,50 @@ body.no-scroll {
 }
 .phone-input:focus { box-shadow: none !important; }
 
+/* Password Input with Toggle */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-input-wrapper .form-input {
+  width: 100%;
+  padding-right: 3rem;
+}
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+.password-toggle-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+}
+.password-toggle-btn:active {
+  transform: translateY(-50%) scale(0.9);
+}
+.password-toggle-btn .eye-closed {
+  display: none;
+}
+.password-toggle-btn.visible .eye-open {
+  display: none;
+}
+.password-toggle-btn.visible .eye-closed {
+  display: block;
+}
+
 /* Forgot Password Modal */
 #forgotPasswordModal { z-index: var(--z-modal); }
 #forgotPasswordModal .modal-panel { overflow: visible; }

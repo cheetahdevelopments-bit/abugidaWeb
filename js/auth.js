@@ -10,6 +10,7 @@ const Auth = {
     this.setupOTPInputs();
     this.setupForgotPassword();
     this.setupPhoneInputs();
+    this.setupPasswordToggle();
   },
 
   /* ===========================================================
@@ -27,6 +28,26 @@ const Auth = {
         val = val.substring(0, 9);
         input.value = val;
       });
+    });
+  },
+
+  /* ===========================================================
+     PASSWORD TOGGLE — Eye icon show/hide
+     =========================================================== */
+  setupPasswordToggle() {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.password-toggle-btn');
+      if (!btn) return;
+
+      e.preventDefault();
+      const targetId = btn.dataset.target;
+      const input = document.getElementById(targetId);
+      if (!input) return;
+
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.classList.toggle('visible', isPassword);
+      input.focus({ preventScroll: true });
     });
   },
 

@@ -9,6 +9,7 @@ const App = {
     // Initialize modules
     Auth.init();
     Dashboard.setupSettings();
+    Payment.init(); 
 
     // Setup all event listeners
     this.setupNavigation();
@@ -275,7 +276,7 @@ const App = {
     if (this._isTransitioning) return;
 
     const pageMap = {
-      home: 'page-home', features: 'page-home', about: 'page-home', contact: 'page-home',
+      home: 'page-home', features: 'page-home', about: 'page-home', contact: 'page-home', pricing: 'page-home',
       auth: 'page-auth', dashboard: 'page-dashboard',
     };
 
@@ -334,10 +335,10 @@ const App = {
     const currentEl = document.querySelector('.page.active');
     const targetEl = document.getElementById(targetId);
 
-    // Same page section scroll (features, about, contact)
+    // Same page section scroll (features, about, contact, pricing)
     if (!currentEl || !targetEl || currentEl === targetEl) {
-      if (['features', 'about', 'contact'].includes(page)) {
-        const sectionMap = { features: 'featuresSection', about: 'aboutSection', contact: 'trustSection' };
+      if (['features', 'about', 'contact', 'pricing'].includes(page)) {
+        const sectionMap = { features: 'featuresSection', about: 'aboutSection', contact: 'trustSection', pricing: 'pricingSection' };
         setTimeout(() => {
           document.getElementById(sectionMap[page])?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
@@ -446,8 +447,8 @@ const App = {
     }
 
     // Scroll to section on landing page
-    if (['features', 'about', 'contact'].includes(page)) {
-      const sectionMap = { features: 'featuresSection', about: 'aboutSection', contact: 'trustSection' };
+    if (['features', 'about', 'contact', 'pricing'].includes(page)) {
+      const sectionMap = { features: 'featuresSection', about: 'aboutSection', contact: 'trustSection', pricing: 'pricingSection' };
       setTimeout(() => {
         document.getElementById(sectionMap[page])?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 500);

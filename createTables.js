@@ -19,6 +19,8 @@ async function createTables() {
 
         // Drop existing tables (in correct order)
         console.log('🗑️  Dropping existing tables...');
+        await pool.query('DROP TABLE IF EXISTS payment_transactions CASCADE');
+        await pool.query('DROP TABLE IF EXISTS subscriptions CASCADE');
         await pool.query('DROP TABLE IF EXISTS children CASCADE');
         await pool.query('DROP TABLE IF EXISTS users CASCADE');
         await pool.query('DROP TABLE IF EXISTS otps CASCADE');
@@ -101,6 +103,72 @@ async function createTables() {
         `);
         console.log('✅ session table created\n');
 
+        // Create subscriptions table
+        console.log('📝 Creating subscriptions table...');
+        await pool.query(`
+            CREATE TABLE subscriptions (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+                plan_name VARCHAR(50) NOT NULL,
+                plan_type VARCHAR(20) NOT NULL CHECK (plan_type IN ('monthly', 'quarterly', 'semi_annual')),
+                amount DECIMAL(10, 2) NOT NULL,
+                currency VARCHAR(3) NOT NULL DEFAULT 'ETB',
+                status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'expired', 'cancelled', 'pending')),
+                start_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                end_date TIMESTAMP NOT NULL,
+                auto_renew BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('✅ subscriptions table created\n');
+
+        // Create payment_transactions table
+        console.log('📝 Creating payment_transactions table...');
+        await pool.query(`
+            CREATE TABLE payment_transactions (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+                subscription_id UUID REFERENCES subscriptions(id) ON DELETE SET NULL,
+                tx_ref VARCHAR(100) UNIQUE NOT NULL,
+                chapa_ref_id VARCHAR(100) UNIQUE,
+                amount DECIMAL(10, 2) NOT NULL,
+                currency VARCHAR(3) NOT NULL DEFAULT 'ETB',
+                plan_type VARCHAR(20) NOT NULL CHECK (plan_type IN ('monthly', 'quarterly', 'semi_annual')),
+                plan_name VARCHAR(50) NOT NULL,
+                status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'success', 'failed', 'cancelled')),
+                email VARCHAR(255),
+                first_name VARCHAR(100),
+                last_name VARCHAR(100),
+                phone_number VARCHAR(20),
+                checkout_url TEXT,
+                callback_url TEXT,
+                return_url TEXT,
+                payment_method VARCHAR(50),
+                verified_at TIMESTAMP,
+                paid_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('✅ payment_transactions table created\n');
+
+        // Create webhook_events table for logging Chapa webhooks
+        console.log('📝 Creating webhook_events table...');
+        await pool.query(`
+            CREATE TABLE webhook_events (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                event_type VARCHAR(100) NOT NULL,
+                tx_ref VARCHAR(100),
+                chapa_ref_id VARCHAR(100),
+                payload JSONB,
+                status VARCHAR(20) DEFAULT 'received',
+                processed_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('✅ webhook_events table created\n');
+
         // Create indexes
         console.log('📝 Creating indexes...');
         await pool.query('CREATE INDEX idx_users_email ON users(email)');
@@ -108,6 +176,22 @@ async function createTables() {
         await pool.query('CREATE INDEX idx_children_user_id ON children(user_id)');
         await pool.query('CREATE INDEX idx_otps_phone ON otps(phone)');
         await pool.query('CREATE INDEX "IDX_session_expire" ON "session" ("expire")');
+        
+        // Subscription indexes
+        await pool.query('CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id)');
+        await pool.query('CREATE INDEX idx_subscriptions_status ON subscriptions(status)');
+        await pool.query('CREATE INDEX idx_subscriptions_end_date ON subscriptions(end_date)');
+        
+        // Payment transaction indexes
+        await pool.query('CREATE INDEX idx_payment_tx_ref ON payment_transactions(tx_ref)');
+        await pool.query('CREATE INDEX idx_payment_user_id ON payment_transactions(user_id)');
+        await pool.query('CREATE INDEX idx_payment_status ON payment_transactions(status)');
+        await pool.query('CREATE INDEX idx_payment_chapa_ref ON payment_transactions(chapa_ref_id)');
+        
+        // Webhook events indexes
+        await pool.query('CREATE INDEX idx_webhook_tx_ref ON webhook_events(tx_ref)');
+        await pool.query('CREATE INDEX idx_webhook_chapa_ref ON webhook_events(chapa_ref_id)');
+        await pool.query('CREATE INDEX idx_webhook_status ON webhook_events(status)');
         console.log('✅ Indexes created\n');
 
         // Enable UUID extension if not exists
@@ -124,6 +208,9 @@ async function createTables() {
         console.log('  - otps');
         console.log('  - schools');
         console.log('  - session');
+        console.log('  - subscriptions');
+        console.log('  - payment_transactions');
+        console.log('  - webhook_events');
 
     } catch (error) {
         console.error('❌ Error creating tables:', error);
