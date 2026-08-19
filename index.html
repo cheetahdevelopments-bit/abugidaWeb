@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Abugida — Stay connected to your child's education. Real-time updates on academic progress, attendance, and school communication.">
+  <title>Abugida — Parent-School Connection</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234F46E5'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-weight='700' font-family='system-ui'>A</text></svg>">
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/pages1.css">
+  <link rel="stylesheet" href="css/pages2.css">
+  <link rel="stylesheet" href="css/scroll-animations.css">
+  <link rel="stylesheet" href="css/enhanced-sections.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="#home" class="brand" id="brandLink">
+        <img src="images/logos/site_logo.png" alt="Abugida" class="brand-logo-img" style="width: 160px !important;">
+        
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" data-nav="home">Home</a>
+        <a href="#features" class="nav-link" data-nav="features">Features</a>
+        <a href="#about" class="nav-link" data-nav="about">About</a>
+        <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Not logged in -->
+        <div id="navAuthButtons" class="nav-auth-group">
+          <a href="#auth" class="btn btn-ghost" id="navLoginBtn">Sign in</a>
+          <a href="#auth" class="btn btn-primary" id="navRegisterBtn">Get Started</a>
+        </div>
+        <!-- Logged in -->
+        <div id="navUserMenu" class="nav-auth-group hidden">
+          <a href="#dashboard" class="btn btn-ghost" id="navDashboardBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </a>
+          <button class="btn btn-ghost" id="navSignOutBtn" style="color:var(--color-text-secondary)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <button class="mobile-nav-back-btn" id="mobileNavBackBtn" aria-label="Close mobile navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <nav>
+      <a href="#home" class="nav-link active" data-nav="home">Home</a>
+      <a href="#features" class="nav-link" data-nav="features">Features</a>
+      <a href="#about" class="nav-link" data-nav="about">About</a>
+      <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+    </nav>
+    <div class="nav-glow-line"></div>
+    <div class="mobile-nav-actions" id="mobileAuthButtons">
+      <a href="#auth" class="btn btn-secondary btn-full" id="mobileLoginBtn">Sign in</a>
+      <a href="#auth" class="btn btn-primary btn-full" id="mobileRegisterBtn">Get Started</a>
+    </div>
+    <div class="mobile-nav-actions hidden" id="mobileUserMenu">
+      <a href="#dashboard" class="btn btn-primary btn-full" id="mobileDashboardBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <button class="btn btn-secondary btn-full" id="mobileSignOutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- ==================== LANDING PAGE ==================== -->
+  <div class="page active" id="page-home">
+
+    <!-- Hero -->
+    <section class="section hero hero-bg" id="heroSection">
+      <!-- Matrix Digital Rain Columns -->
+      <div class="matrix-column" style="left: 8%; animation-duration: 12s; animation-delay: 0s;"></div>
+      <div class="matrix-column" style="left: 22%; animation-duration: 15s; animation-delay: -3s;"></div>
+      <div class="matrix-column" style="left: 38%; animation-duration: 10s; animation-delay: -6s;"></div>
+      <div class="matrix-column" style="left: 54%; animation-duration: 14s; animation-delay: -2s;"></div>
+      <div class="matrix-column" style="left: 70%; animation-duration: 11s; animation-delay: -8s;"></div>
+      <div class="matrix-column" style="left: 86%; animation-duration: 13s; animation-delay: -4s;"></div>
+      
+      <!-- Glowing Orbs -->
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      
+      <div class="section-inner hero-inner">
+        <div class="hero-content stagger-children">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>Education Platform for Parents</span>
+          </div>
+          <h1 class="hero-title">
+            <span>Stay connected to your</span><br>
+            <span class="hero-title-accent">child's education</span>
+          </h1>
+          <p class="hero-subtitle">
+            Abugida connects parents with schools, providing real-time updates on academic progress, attendance, and communication — all in one place.
+          </p>
+          <div class="hero-actions">
+            <a href="#auth" class="btn btn-primary btn-xl" id="heroGetStarted">
+              <span>Get Started</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#auth" class="btn btn-secondary btn-xl" id="heroSignIn">Sign In</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value">50+</span>
+              <span class="hero-stat-label">Schools</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">10k+</span>
+              <span class="hero-stat-label">Parents</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">98%</span>
+              <span class="hero-stat-label">Satisfaction</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visuals">
+          <div class="hero-visual-wrapper scale-in">
+            <div class="hero-visual-layer" data-parallax-speed="-0.1">
+              <div class="hero-preview android-preview">
+                <div class="android-status-bar">
+                  <div class="android-status-time">9:41</div>
+                  <div class="android-status-icons">
+                    <svg viewBox="0 0 24 24"><path d="M18 8.5V6a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2.5"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M2 12h2l3.5-9 4 18 3.5-9h2"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 0 1-10 10A10 10 0 0 1 2 12h0a10 10 0 0 1 10-10 10 10 0 0 1 10 10z"/></svg>
+                  </div>
+                </div>
+                <div class="android-header">
+                  <div class="android-avatar">JD</div>
+                  <div>
+                    <div class="android-welcome">Good morning,</div>
+                    <div class="android-user-name">John Doe</div>
+                  </div>
+                </div>
+                <div class="android-body">
+                  <div class="android-summary-card">
+                    <div>
+                      <div class="android-summary-title">3 New Messages</div>
+                      <div class="android-summary-subtitle">From teachers & school</div>
+                    </div>
+                    <div class="android-summary-icon blue">
+                      <svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"/><path d="M4 4l8 6 8-6"/></svg>
+                    </div>
+                  </div>
+                  <div class="android-summary-card">
+                    <div>
+                      <div class="android-summary-title">1 Upcoming Event</div>
+                      <div class="android-summary-subtitle">Parent-teacher meeting</div>
+                    </div>
+                    <div class="android-summary-icon orange">
+                      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                  </div>
+
+                  <h3 class="android-section-title">Today's Summary</h3>
+
+                  <div class="android-child-card">
+                    <div class="android-child-info">
+                      <div class="android-child-avatar">E</div>
+                      <div class="android-child-name">Eliana</div>
+                    </div>
+                    <div class="android-child-stats">
+                      <div class="android-child-stat">
+                        <div class="android-child-stat-label">Attendance</div>
+                        <div class="android-child-stat-value success">Present</div>
+                      </div>
+                      <div class="android-child-stat">
+                        <div class="android-child-stat-label">Grades</div>
+                        <div class="android-child-stat-value">A-</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="android-child-card">
+                    <div class="android-child-info">
+                      <div class="android-child-avatar">D</div>
+                      <div class="android-child-name">Daniel</div>
+                    </div>
+                    <div class="android-child-stats">
+                      <div class="android-child-stat">
+                        <div class="android-child-stat-label">Attendance</div>
+                        <div class="android-child-stat-value warning">Late</div>
+                      </div>
+                      <div class="android-child-stat">
+                        <div class="android-child-stat-label">Grades</div>
+                        <div class="android-child-stat-value">B+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="android-nav-bar">
+                  <div class="android-nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Home</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Children</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Profile</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual-wrapper scale-in" style="--delay: 150ms;">
+            <div class="hero-visual-layer" data-parallax-speed="-0.2">
+              <div class="hero-preview android-preview">
+                <div class="android-status-bar">
+                  <div class="android-status-time">9:41</div>
+                  <div class="android-status-icons">
+                    <svg viewBox="0 0 24 24"><path d="M18 8.5V6a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2.5"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M2 12h2l3.5-9 4 18 3.5-9h2"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 0 1-10 10A10 10 0 0 1 2 12h0a10 10 0 0 1 10-10 10 10 0 0 1 10 10z"/></svg>
+                  </div>
+                </div>
+                <div class="android-header" style="justify-content: space-between;">
+                  <div>
+                    <div class="android-welcome">Attendance</div>
+                    <div class="android-user-name">August 2026</div>
+                  </div>
+                  <div style="background: var(--color-success); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">94%</div>
+                </div>
+                <div class="android-body">
+                  <div class="android-calendar">
+                    <div class="android-calendar-header">
+                      <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                    </div>
+                    <div class="android-calendar-grid">
+                      <span class="cal-day">28</span><span class="cal-day">29</span><span class="cal-day">30</span><span class="cal-day">31</span><span class="cal-day present">1</span><span class="cal-day present">2</span><span class="cal-day">3</span>
+                      <span class="cal-day present">4</span><span class="cal-day present">5</span><span class="cal-day present">6</span><span class="cal-day present">7</span><span class="cal-day present">8</span><span class="cal-day absent">9</span><span class="cal-day">10</span>
+                      <span class="cal-day present">11</span><span class="cal-day present">12</span><span class="cal-day late">13</span><span class="cal-day present">14</span><span class="cal-day present">15</span><span class="cal-day">16</span><span class="cal-day">17</span>
+                    </div>
+                  </div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+                    <div class="android-summary-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                      <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-success);"></div>
+                        <div class="android-summary-subtitle">Present</div>
+                      </div>
+                      <div class="android-summary-title" style="font-size: 18px;">12</div>
+                    </div>
+                    <div class="android-summary-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                      <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-error);"></div>
+                        <div class="android-summary-subtitle">Absent</div>
+                      </div>
+                      <div class="android-summary-title" style="font-size: 18px;">1</div>
+                    </div>
+                    <div class="android-summary-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                      <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-warning);"></div>
+                        <div class="android-summary-subtitle">Late</div>
+                      </div>
+                      <div class="android-summary-title" style="font-size: 18px;">1</div>
+                    </div>
+                    <div class="android-summary-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                      <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary);"></div>
+                        <div class="android-summary-subtitle">Total Days</div>
+                      </div>
+                      <div class="android-summary-title" style="font-size: 18px;">14</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="android-nav-bar">
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Home</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Children</span>
+                  </div>
+                  <div class="android-nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Profile</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual-wrapper scale-in" style="--delay: 300ms;">
+            <div class="hero-visual-layer" data-parallax-speed="-0.3">
+              <div class="hero-preview android-preview">
+                <div class="android-status-bar">
+                  <div class="android-status-time">9:41</div>
+                  <div class="android-status-icons">
+                    <svg viewBox="0 0 24 24"><path d="M18 8.5V6a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2.5"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M2 12h2l3.5-9 4 18 3.5-9h2"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 0 1-10 10A10 10 0 0 1 2 12h0a10 10 0 0 1 10-10 10 10 0 0 1 10 10z"/></svg>
+                  </div>
+                </div>
+                <div class="android-header" style="justify-content: space-between;">
+                  <div>
+                    <div class="android-welcome">Academic Report</div>
+                    <div class="android-user-name">Eliana - Grade 5</div>
+                  </div>
+                  <div style="background: var(--color-primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">A-</div>
+                </div>
+                <div class="android-body">
+                  <div class="android-grade-card">
+                    <div class="android-grade-info">
+                      <div class="android-grade-icon" style="background: var(--color-primary-light); color: var(--color-primary);">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                      </div>
+                      <div>
+                        <div class="android-grade-subject">Mathematics</div>
+                        <div class="android-grade-semester">Semester 1</div>
+                      </div>
+                    </div>
+                    <div class="android-grade-score" style="color: var(--color-success);">92%</div>
+                  </div>
+                  <div class="android-grade-card">
+                    <div class="android-grade-info">
+                      <div class="android-grade-icon" style="background: var(--color-success-light); color: var(--color-success);">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                      </div>
+                      <div>
+                        <div class="android-grade-subject">English</div>
+                        <div class="android-grade-semester">Semester 1</div>
+                      </div>
+                    </div>
+                    <div class="android-grade-score" style="color: var(--color-success);">88%</div>
+                  </div>
+                  <div class="android-grade-card">
+                    <div class="android-grade-info">
+                      <div class="android-grade-icon" style="background: var(--color-warning-light); color: var(--color-warning);">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                      </div>
+                      <div>
+                        <div class="android-grade-subject">Science</div>
+                        <div class="android-grade-semester">Semester 1</div>
+                      </div>
+                    </div>
+                    <div class="android-grade-score" style="color: var(--color-warning);">76%</div>
+                  </div>
+                  <div class="android-grade-card">
+                    <div class="android-grade-info">
+                      <div class="android-grade-icon" style="background: #F0EBE1; color: #8A5023;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                      </div>
+                      <div>
+                        <div class="android-grade-subject">Amharic</div>
+                        <div class="android-grade-semester">Semester 1</div>
+                      </div>
+                    </div>
+                    <div class="android-grade-score" style="color: var(--color-success);">91%</div>
+                  </div>
+                  <div style="background: linear-gradient(135deg, var(--color-primary-light), #F0EBE1); border-radius: 12px; padding: 12px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                      <div style="font-size: 11px; font-weight: 600; color: var(--color-text-secondary);">Overall GPA</div>
+                      <div style="font-size: 20px; font-weight: 700; color: var(--color-primary);">3.7</div>
+                    </div>
+                    <div style="font-size: 11px; color: var(--color-success); font-weight: 600;">Top 15% of class</div>
+                  </div>
+                </div>
+                <div class="android-nav-bar">
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Home</span>
+                  </div>
+                  <div class="android-nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Children</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                  </div>
+                  <div class="android-nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Profile</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section features-section geez-divider" id="featuresSection">
+      <div class="features-particles">
+        <div class="features-particle" style="left:10%; animation-duration:12s; animation-delay:0s;"></div>
+        <div class="features-particle" style="left:25%; animation-duration:18s; animation-delay:-4s;"></div>
+        <div class="features-particle" style="left:40%; animation-duration:14s; animation-delay:-7s;"></div>
+        <div class="features-particle" style="left:55%; animation-duration:16s; animation-delay:-2s;"></div>
+        <div class="features-particle" style="left:70%; animation-duration:20s; animation-delay:-9s;"></div>
+        <div class="features-particle" style="left:85%; animation-duration:13s; animation-delay:-5s;"></div>
+        <div class="features-particle" style="left:15%; animation-duration:17s; animation-delay:-11s;"></div>
+        <div class="features-particle" style="left:60%; animation-duration:15s; animation-delay:-3s;"></div>
+      </div>
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg">Everything you need</h2>
+          <p class="body-lg">Comprehensive tools to keep you connected with your child's education journey.</p>
+        </div>
+        <div class="features-grid stagger-children">
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3>Academic Tracking</h3>
+              <p>Monitor grades, progress, and academic performance in real-time across all your children.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3>Parent-Teacher Communication</h3>
+              <p>Direct messaging with teachers and school staff for seamless communication.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <h3>Events & Activities</h3>
+              <p>Stay updated with school events, parent-teacher meetings, and extracurricular activities.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <h3>Fees & Payments</h3>
+              <p>Track tuition fees, view payment history, and manage school expenses seamlessly.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon teal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+              </div>
+              <h3>Attendance Monitoring</h3>
+              <p>Real-time attendance tracking so you always know your child is in school.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="hover-3d-child">
+              <div class="feature-icon rose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <h3>Notifications & Alerts</h3>
+              <p>Instant notifications for important updates, announcements, and school communications.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-it-works-section geez-divider section-bg-live-2" id="aboutSection">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg">How it works</h2>
+          <p class="body-lg">Get started in three simple steps.</p>
+        </div>
+        <div class="steps-grid stagger-children reveal-on-scroll">
+          <div class="step-connector"></div>
+          <div class="step-connector-fill"></div>
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Create your account</h3>
+            <p>Register with your phone number and verify with a quick OTP code.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Connect your child</h3>
+            <p>Add your children and link them to their schools in seconds.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Stay connected</h3>
+            <p>Get real-time updates on academic progress, attendance, and more.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Security -->
+    <section class="section trust-section geez-divider section-bg-live-3" id="trustSection">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg">Built for trust</h2>
+          <p class="body-lg">Your family's data is protected with enterprise-grade security.</p>
+        </div>
+        <div class="trust-grid stagger-children">
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <h4>Secure Authentication</h4>
+                <p>Phone-based OTP verification and encrypted password storage protect your account.</p>
+              </div>
+            </div>
+          </div>
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div>
+                <h4>Data Privacy</h4>
+                <p>Your personal information is encrypted and never shared with third parties.</p>
+              </div>
+            </div>
+          </div>
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <h4>Verified Schools</h4>
+                <p>Only verified schools and authorized staff can access student information.</p>
+              </div>
+            </div>
+          </div>
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <h4>Session Security</h4>
+                <p>Secure session management with automatic timeout and device tracking.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- New: Advanced Encryption -->
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.5L4.75 10.25l7.25-7.25 7.25 7.25L12 17.5zM2 12l10 10 10-10"/></svg>
+              </div>
+              <div>
+                <h4>Advanced Encryption</h4>
+                <p>All data is encrypted at rest and in transit using industry-leading protocols.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- New: Regular Security Audits -->
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <h4>Regular Security Audits</h4>
+                <p>Independent security audits and penetration testing ensure continuous protection.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- New: Secure Payment Processing -->
+          <div class="trust-card has-3d-hover">
+            <div class="hover-3d-child">
+              <div class="trust-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <div>
+                <h4>Secure Payments</h4>
+                <p>All subscription payments are processed securely with industry-standard encryption and compliance.</p>
+                <a href="#pricing" class="link-sm">Learn about subscriptions</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="section pricing-section geez-divider section-bg-live-1" id="pricingSection">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg">Simple & Transparent Pricing</h2>
+          <p class="body-lg">Choose the plan that best fits your family's needs.</p>
+        </div>
+        <div class="pricing-grid stagger-children">
+          <div class="pricing-card">
+            <div class="hover-3d-child">
+              <h3>Basic</h3>
+              <p class="pricing-description">Essential features for individual parents.</p>
+              <div class="price">
+                <span class="price-currency">ETB</span>
+                <span class="price-value">50</span>
+                <span class="price-period">/month</span>
+              </div>
+              <ul class="features-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Track 1 child</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Academic Progress</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Attendance Monitoring</li>
+                <li class="feature-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/></svg> Teacher Messaging</li>
+                <li class="feature-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/></svg> Event Notifications</li>
+              </ul>
+              <button class="btn btn-primary btn-full btn-lg">Get Started</button>
+            </div>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="hover-3d-child">
+              <div class="pricing-badge">Recommended</div>
+              <h3>Premium</h3>
+              <p class="pricing-description">Full access for growing families.</p>
+              <div class="price">
+                <span class="price-currency">ETB</span>
+                <span class="price-value">100</span>
+                <span class="price-period">/month</span>
+              </div>
+              <ul class="features-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Track up to 3 children</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Academic Progress</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Attendance Monitoring</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Teacher Messaging</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Event Notifications</li>
+              </ul>
+              <button class="btn btn-primary btn-full btn-lg">Choose Premium</button>
+            </div>
+          </div>
+
+          <div class="pricing-card">
+            <div class="hover-3d-child">
+              <h3>Family</h3>
+              <p class="pricing-description">Unlimited children, maximum peace of mind.</p>
+              <div class="price">
+                <span class="price-currency">ETB</span>
+                <span class="price-value">150</span>
+                <span class="price-period">/month</span>
+              </div>
+              <ul class="features-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Track unlimited children</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Academic Progress</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Attendance Monitoring</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Teacher Messaging</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Event Notifications</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority Support</li>
+              </ul>
+              <button class="btn btn-primary btn-full btn-lg">Go Family</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+      <div class="cta-box fade-in-up">
+        <h2>Ready to stay connected?</h2>
+        <p>Join thousands of parents who trust Abugida to keep them informed about their children's education.</p>
+        <div class="cta-actions">
+          <a href="#auth" class="btn btn-primary btn-xl" id="ctaGetStarted">Get Started Free</a>
+          <a href="#auth" class="btn btn-secondary btn-xl" id="ctaSignIn">Sign In</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#home" class="brand">
+              <img src="images/logos/site_logo.png" alt="Abugida" class="brand-logo-img" style="width: 160px !important;">
+              
+            </a>
+            <p>Connecting parents with schools. Real-time updates on academic progress, attendance, and communication.</p>
+            <div class="footer-newsletter">
+              <input type="email" placeholder="Your email" aria-label="Email for newsletter">
+              <button type="button">Subscribe</button>
+            </div>
+            <div class="footer-social">
+              <a class="footer-social-link" aria-label="Twitter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+              </a>
+              <a class="footer-social-link" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a class="footer-social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <a class="footer-social-link" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+              <a class="footer-social-link" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#about">How It Works</a>
+            <a href="#auth">Get Started</a>
+            <a href="#">Pricing</a>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#contact">Contact Us</a>
+            <a href="#" id="footerHelpCenter">Help Center</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#about">About</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Abugida. All rights reserved.</span>
+          <span>Made with care for parents and schools.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== AUTH PAGE ==================== -->
+  <div class="page page-auth" id="page-auth">
+    <div class="auth-page">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <!-- Hero-style animated orbs -->
+          <div class="auth-card-orb auth-card-orb-1"></div>
+          <div class="auth-card-orb auth-card-orb-2"></div>
+          <div class="auth-card-orb auth-card-orb-3"></div>
+          <button class="auth-back-btn" id="authBackBtn" aria-label="Go back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+          </button>
+          <div class="auth-card-header">
+            <h1 id="authTitle">Welcome back</h1>
+            <p id="authSubtitle">Sign in to your account to continue.</p>
+          </div>
+
+          <div class="auth-tabs">
+            <button class="auth-tab active" data-auth-tab="login">Sign In</button>
+            <button class="auth-tab" data-auth-tab="register">Register</button>
+          </div>
+
+          <!-- Login Panel -->
+          <div class="auth-tab-panel active" id="auth-login">
+            <div id="loginError" class="auth-error hidden"></div>
+            <form id="loginForm" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="loginIdentifier">Phone or Email</label>
+                <input type="text" id="loginIdentifier" class="form-input" placeholder="Enter phone or email" autocomplete="username" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Enter password" autocomplete="current-password" required>
+              </div>
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="rememberMe" class="custom-checkbox-input">
+                  <span class="custom-checkbox-box">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="custom-checkbox-label">Remember me for 7 days</span>
+                </label>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Forgot password?</a>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">Sign In</button>
+            </form>
+          </div>
+
+          <!-- Register Panel -->
+          <div class="auth-tab-panel" id="auth-register">
+            <!-- Steps Bar -->
+            <div class="register-steps-bar" id="registerStepsBar">
+              <div class="register-step-indicator active" data-step="1">
+                <div class="register-step-circle">1</div>
+                <span class="register-step-label">Info</span>
+              </div>
+              <div class="register-step-line"></div>
+              <div class="register-step-indicator" data-step="2">
+                <div class="register-step-circle">2</div>
+                <span class="register-step-label">Verify</span>
+              </div>
+              <div class="register-step-line"></div>
+              <div class="register-step-indicator" data-step="3">
+                <div class="register-step-circle">3</div>
+                <span class="register-step-label">Children</span>
+              </div>
+            </div>
+
+            <!-- Step 1: Personal Information -->
+            <div class="register-step active" data-register-step="1">
+              <div class="register-step-header">
+                <h2>Create your account</h2>
+                <p>Tell us about yourself to get started.</p>
+              </div>
+              <form id="infoForm" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="regFirstName">First Name <span class="required">*</span></label>
+                    <input type="text" id="regFirstName" class="form-input" placeholder="First name" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="regLastName">Last Name <span class="required">*</span></label>
+                    <input type="text" id="regLastName" class="form-input" placeholder="Last name" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="regPhone">Phone Number <span class="required">*</span></label>
+                  <div class="phone-input-wrapper">
+                    <span class="phone-prefix">+251</span>
+                    <input type="tel" id="regPhone" class="form-input phone-input" placeholder="9XXXXXXXX" required>
+                  </div>
+                  <div class="form-hint">Ethiopian mobile number</div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="regEmail">Email <span style="color:var(--color-text-tertiary)">(Optional)</span></label>
+                  <input type="email" id="regEmail" class="form-input" placeholder="Email address" autocomplete="email">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="regPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="regPassword" class="form-input" placeholder="Min 8 characters" autocomplete="new-password" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="regConfirmPassword">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm password" autocomplete="new-password" required>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-full btn-lg" id="continueToOtp">Continue</button>
+              </form>
+            </div>
+
+            <!-- Step 2: Phone Verification -->
+            <div class="register-step" data-register-step="2">
+              <div class="register-step-header">
+                <h2>Verify your phone</h2>
+                <p>We sent a code to <strong id="regPhoneDisplay"></strong></p>
+              </div>
+              <div class="otp-group" id="regOtpGroup">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="0" inputmode="numeric" autocomplete="one-time-code">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="1" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="2" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="3" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="4" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="5" inputmode="numeric">
+              </div>
+              <div class="otp-timer" id="regOtpTimer"></div>
+              <button type="button" class="btn btn-primary btn-full btn-lg" id="verifyRegOtpBtn">Verify & Continue</button>
+              <button type="button" class="btn btn-ghost btn-full" id="regBackToInfo" style="margin-top:var(--space-3)">Change phone number</button>
+            </div>
+
+            <!-- Step 3: Children -->
+            <div class="register-step" data-register-step="3">
+              <div class="register-step-header">
+                <h2>Add your children</h2>
+                <p>Add at least one child to get started.</p>
+              </div>
+              <div id="childrenContainer"></div>
+              <button type="button" class="btn btn-secondary btn-full" id="addChildBtn" style="margin-bottom:var(--space-4)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add another child
+              </button>
+              <button type="button" class="btn btn-primary btn-full btn-lg" id="completeRegistrationBtn">Complete Registration</button>
+            </div>
+          </div>
+
+          <div class="auth-footer">
+            <span id="authFooterText">Don't have an account?</span>
+            <a href="#" id="authFooterLink">Create one</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FORGOT PASSWORD MODAL ==================== -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal-backdrop" id="forgotPasswordBackdrop"></div>
+    <div class="modal-panel" style="max-width:420px">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset Password</h3>
+        <button class="modal-close" id="forgotPasswordClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Step 1: Enter phone -->
+        <div id="forgotStep1">
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-5)">Enter the phone number associated with your account and we'll send you a verification code.</p>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <div class="phone-input-wrapper">
+              <span class="phone-prefix">+251</span>
+              <input type="tel" id="forgotPhone" class="form-input phone-input" placeholder="9XXXXXXXX" required>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotSendOtpBtn">Send Code</button>
+        </div>
+        <!-- Step 2: Enter OTP + new password -->
+        <div id="forgotStep2" class="hidden">
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-5)">Enter the code sent to <strong id="forgotPhoneDisplay"></strong> and your new password.</p>
+          <div class="otp-group" id="forgotOtpGroup">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="0" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="1" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="2" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="3" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="4" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="5" inputmode="numeric">
+          </div>
+          <div class="otp-timer" id="forgotOtpTimer"></div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" id="forgotNewPassword" class="form-input" placeholder="Min 8 characters" autocomplete="new-password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="forgotConfirmPassword" class="form-input" placeholder="Confirm password" autocomplete="new-password">
+          </div>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotResetBtn">Reset Password</button>
+          <button type="button" class="btn btn-ghost btn-full" id="forgotBackBtn" style="margin-top:var(--space-3)">Back to phone</button>
+        </div>
+        <!-- Step 3: Success -->
+        <div id="forgotStep3" class="hidden" style="text-align:center;padding:var(--space-6) 0">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--color-success-light);color:var(--color-success);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2)">Password Reset Successfully</h3>
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-6)">You can now sign in with your new password.</p>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotDoneBtn">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD PAGE ==================== -->
+  <div class="page page-dashboard" id="page-dashboard">
+    <div class="dashboard-layout">
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <div class="dashboard-content">
+          <!-- Dashboard Header -->
+          <div class="dashboard-header">
+            <div class="dashboard-header-left">
+              <div style="display:flex;align-items:center;gap:var(--space-3)">
+                <h1 class="dashboard-title" id="dashboardTitle">Dashboard</h1>
+              </div>
+              <p class="dashboard-subtitle" id="dashboardSubtitle"></p>
+            </div>
+          </div>
+          <div class="dashboard-nav">
+            <a href="#" class="dashboard-nav-link active" data-dashboard-page="overview">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Dashboard</span>
+            </a>
+            <a href="#" class="dashboard-nav-link" data-dashboard-page="children">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>My Children</span>
+            </a>
+            <a href="#" class="dashboard-nav-link" data-dashboard-page="settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Settings</span>
+            </a>
+          </div>
+
+          <!-- Overview Page -->
+          <div class="dashboard-page active" id="dashboardPage-overview">
+            <div class="welcome-card">
+              <h2 id="welcomeMessage">Hi</h2>
+              <p id="welcomeSubtext">Here are the list of your children.</p>
+            </div>
+            <div class="overview-section">
+              <div class="overview-section-header">
+                <h3 class="overview-section-title">My Children</h3>
+                <button class="btn btn-sm btn-primary" id="overviewAddChildBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add Child
+                </button>
+              </div>
+              <div id="dashboardChildrenList"></div>
+            </div>
+            <div class="overview-section">
+              <div class="overview-section-header">
+                <h3 class="overview-section-title">Latest Communications</h3>
+              </div>
+              <div id="communicationsWidget" class="overview-widget"></div>
+            </div>
+            <div class="overview-section">
+              <div class="overview-section-header">
+                <h3 class="overview-section-title">Upcoming Events</h3>
+              </div>
+              <div id="eventsWidget" class="overview-widget"></div>
+            </div>
+          </div>
+
+          <!-- Children Page -->
+          <div class="dashboard-page" id="dashboardPage-children">
+            <div class="children-header">
+              <h2 class="heading-md">My Children</h2>
+              <button class="btn btn-primary" id="childrenAddBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Add Child</span>
+              </button>
+            </div>
+            <div id="childrenManagement"></div>
+          </div>
+
+          <!-- Settings Page -->
+          <div class="dashboard-page" id="dashboardPage-settings">
+            <h2 class="heading-md" style="margin-bottom:var(--space-6)">Settings</h2>
+            <div class="settings-section">
+              <div class="card">
+                <h3 class="heading-sm" style="margin-bottom:var(--space-6)">Profile Information</h3>
+                <form id="settingsForm" novalidate>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label" for="settingsFirstName">First Name</label>
+                      <input type="text" id="settingsFirstName" class="form-input">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="settingsLastName">Last Name</label>
+                      <input type="text" id="settingsLastName" class="form-input">
+            </div>
+          </div>
+        </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingsEmail">Email</label>
+                    <input type="email" id="settingsEmail" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="text" id="settingsPhone" class="form-input" disabled style="opacity:0.6">
+                    <div class="form-hint">Phone number cannot be changed</div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="saveSettingsBtn">Save Changes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL ==================== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel" id="modalPanel">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <button class="modal-close" id="modalClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST CONTAINER ==================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="js/config.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

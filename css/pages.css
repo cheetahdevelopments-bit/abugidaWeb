@@ -1,0 +1,57 @@
+.empty-widget-state p {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* Helper Classes */
+.flex-group-md {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .dashboard-widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .academic-progress-card, .attendance-card, .communication-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .academic-progress-score, .attendance-summary {
+    align-items: flex-start;
+  }
+  .academic-grade, .attendance-percentage {
+    font-size: var(--text-lg);
+  }
+}
+
+/* Custom styling for Pricing Section Header */
+.pricing-section .section-header {
+  text-align: center; /* Center align the text */
+  margin-bottom: var(--space-10); /* Increased space below the header */
+}
+
+.pricing-section .section-header .display-lg {
+  font-size: var(--text-4xl); /* Larger font size */
+  font-weight: 800; /* Bolder font */
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 10px rgba(var(--color-primary-rgb), 0.3); /* Subtle glow/shadow */
+  animation: gradient-shift 8s ease infinite; /* Re-use existing gradient animation */
+}
+
+.pricing-section .section-header .body-lg {
+  color: var(--color-text-secondary); /* Ensure good contrast */
+  max-width: 700px; /* Max-width for readability */
+  margin-left: auto; /* Center the paragraph */
+  margin-right: auto;
+  font-size: var(--text-lg); /* Slightly larger text */
+  line-height: var(--leading-loose);
+}

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Abugida — Stay connected to your child's education. Real-time updates on academic progress, attendance, and school communication.">
+  <title>Abugida — Parent-School Connection</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234F46E5'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-weight='700' font-family='system-ui'>A</text></svg>">
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/scroll-animations.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="site-header geez-border-bottom" id="siteHeader">
+    <div class="header-inner">
+      <a href="#home" class="brand" id="brandLink">
+        <div class="brand-logo">A</div>
+        <span class="brand-name">Abugida</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" data-nav="home">Home</a>
+        <a href="#features" class="nav-link" data-nav="features">Features</a>
+        <a href="#about" class="nav-link" data-nav="about">About</a>
+        <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Not logged in -->
+        <div id="navAuthButtons" class="nav-auth-group">
+          <a href="#auth" class="btn btn-ghost" id="navLoginBtn">Sign in</a>
+          <a href="#auth" class="btn btn-primary" id="navRegisterBtn">Get Started</a>
+        </div>
+        <!-- Logged in -->
+        <div id="navUserMenu" class="nav-auth-group hidden">
+          <a href="#dashboard" class="btn btn-ghost" id="navDashboardBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Overview
+          </a>
+          <button class="btn btn-ghost" id="navSignOutBtn" style="color:var(--color-text-secondary)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <nav>
+      <a href="#home" class="nav-link active" data-nav="home">Home</a>
+      <a href="#features" class="nav-link" data-nav="features">Features</a>
+      <a href="#about" class="nav-link" data-nav="about">About</a>
+      <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+    </nav>
+    <div class="mobile-nav-actions" id="mobileAuthButtons">
+      <a href="#auth" class="btn btn-secondary btn-full" id="mobileLoginBtn">Sign in</a>
+      <a href="#auth" class="btn btn-primary btn-full" id="mobileRegisterBtn">Get Started</a>
+    </div>
+    <div class="mobile-nav-actions hidden" id="mobileUserMenu">
+      <a href="#dashboard" class="btn btn-primary btn-full" id="mobileDashboardBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <button class="btn btn-secondary btn-full" id="mobileSignOutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- ==================== LANDING PAGE ==================== -->
+  <div class="page active" id="page-home">
+
+    <!-- Hero -->
+    <section class="hero" id="heroSection">
+      <div class="hero-inner">
+        <div class="hero-content stagger-children">
+          <div class="hero-badge" style="background:var(--color-primary-light);color:var(--color-primary);border:1px solid rgba(184,115,51,0.2)">
+            <span class="hero-badge-dot" style="background:var(--color-primary)"></span>
+            <span data-i18n="heroBadge">Education Platform for Parents</span>
+          </div>
+          <h1 class="hero-title">
+            <span data-i18n="heroTitle1">Stay connected to your</span><br>
+            <span class="hero-title-accent" data-i18n="heroTitle2">child's education</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            Abugida connects parents with schools, providing real-time updates on academic progress, attendance, and communication — all in one place.
+          </p>
+          <div class="hero-actions">
+            <a href="#auth" class="btn btn-primary btn-xl" id="heroGetStarted">
+              <span data-i18n="getStarted">Get Started</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#auth" class="btn btn-secondary btn-xl" id="heroSignIn" data-i18n="signIn">Sign In</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value">50+</span>
+              <span class="hero-stat-label" data-i18n="heroStatSchools">Schools</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">10k+</span>
+              <span class="hero-stat-label" data-i18n="heroStatParents">Parents</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">98%</span>
+              <span class="hero-stat-label" data-i18n="heroStatSatisfaction">Satisfaction</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual scale-in">
+          <div class="hero-preview">
+            <div class="preview-chrome">
+              <div class="preview-dots">
+                <span class="preview-dot r"></span>
+                <span class="preview-dot y"></span>
+                <span class="preview-dot g"></span>
+              </div>
+              <span class="preview-title-bar">Parent Dashboard</span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-profile">
+                <div class="avatar avatar-sm">JD</div>
+                <div>
+                  <div class="preview-profile-name">John Doe</div>
+                  <div class="preview-profile-role">Parent</div>
+                </div>
+              </div>
+              <div class="preview-stat-row">
+                <div class="preview-stat-card">
+                  <div class="preview-stat-label">Academic</div>
+                  <div class="preview-stat-value">85%</div>
+                  <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:85%"></div></div>
+                </div>
+                <div class="preview-stat-card">
+                  <div class="preview-stat-label">Attendance</div>
+                  <div class="preview-stat-value">95%</div>
+                  <div class="progress-bar" style="margin-top:8px"><div class="progress-fill success" style="width:95%"></div></div>
+                </div>
+              </div>
+              <div class="preview-stat-card">
+                <div class="preview-stat-label">Children Enrolled</div>
+                <div class="preview-stat-value">2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section geez-divider" id="featuresSection" style="background:var(--color-surface-secondary)">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg" data-i18n="featuresTitle">Everything you need</h2>
+          <p class="body-lg" data-i18n="featuresSubtitle">Comprehensive tools to keep you connected with your child's education journey.</p>
+        </div>
+        <div class="features-grid stagger-children">
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3 data-i18n="featureAcademic">Academic Tracking</h3>
+            <p data-i18n="featureAcademicDesc">Monitor grades, progress, and academic performance in real-time across all your children.</p>
+          </div>
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 data-i18n="featureComm">Parent-Teacher Communication</h3>
+            <p data-i18n="featureCommDesc">Direct messaging with teachers and school staff for seamless communication.</p>
+          </div>
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3 data-i18n="featureEvents">Events & Activities</h3>
+            <p data-i18n="featureEventsDesc">Stay updated with school events, parent-teacher meetings, and extracurricular activities.</p>
+          </div>
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 data-i18n="featureFees">Fees & Payments</h3>
+            <p data-i18n="featureFeesDesc">Track tuition fees, view payment history, and manage school expenses seamlessly.</p>
+          </div>
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <h3 data-i18n="featureAttendance">Attendance Monitoring</h3>
+            <p data-i18n="featureAttendanceDesc">Real-time attendance tracking so you always know your child is in school.</p>
+          </div>
+          <div class="feature-card bronze-shimmer">
+            <div class="feature-icon rose">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <h3 data-i18n="featureNotifications">Notifications & Alerts</h3>
+            <p data-i18n="featureNotificationsDesc">Instant notifications for important updates, announcements, and school communications.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section geez-divider" id="aboutSection">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg" data-i18n="howTitle">How it works</h2>
+          <p class="body-lg" data-i18n="howSubtitle">Get started in three simple steps.</p>
+        </div>
+        <div class="steps-grid stagger-children">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3 data-i18n="step1Title">Create your account</h3>
+            <p data-i18n="step1Desc">Register with your phone number and verify with a quick OTP code.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3 data-i18n="step2Title">Connect your child</h3>
+            <p data-i18n="step2Desc">Add your children and link them to their schools in seconds.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3 data-i18n="step3Title">Stay connected</h3>
+            <p data-i18n="step3Desc">Get real-time updates on academic progress, attendance, and more.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Security -->
+    <section class="section geez-divider" id="trustSection" style="background:var(--color-surface-secondary)">
+      <div class="section-inner">
+        <div class="section-header fade-in-up">
+          <h2 class="display-lg" data-i18n="trustTitle">Built for trust</h2>
+          <p class="body-lg" data-i18n="trustSubtitle">Your family's data is protected with enterprise-grade security.</p>
+        </div>
+        <div class="trust-grid stagger-children">
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h4 data-i18n="trustSecure">Secure Authentication</h4>
+              <p data-i18n="trustSecureDesc">Phone-based OTP verification and encrypted password storage protect your account.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <h4 data-i18n="trustPrivacy">Data Privacy</h4>
+              <p data-i18n="trustPrivacyDesc">Your personal information is encrypted and never shared with third parties.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <h4 data-i18n="trustVerified">Verified Schools</h4>
+              <p data-i18n="trustVerifiedDesc">Only verified schools and authorized staff can access student information.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h4 data-i18n="trustSession">Session Security</h4>
+              <p data-i18n="trustSessionDesc">Secure session management with automatic timeout and device tracking.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-box fade-in-up">
+        <h2 data-i18n="ctaTitle">Ready to stay connected?</h2>
+        <p data-i18n="ctaSubtitle">Join thousands of parents who trust Abugida to keep them informed about their children's education.</p>
+        <div class="cta-actions">
+          <a href="#auth" class="btn btn-primary btn-xl" id="ctaGetStarted" data-i18n="ctaGetStarted">Get Started Free</a>
+          <a href="#auth" class="btn btn-secondary btn-xl" id="ctaSignIn" data-i18n="ctaSignIn">Sign In</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer geez-border-top">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#home" class="brand">
+              <div class="brand-logo">A</div>
+              <span class="brand-name">Abugida</span>
+            </a>
+            <p data-i18n="footerDesc">Connecting parents with schools. Real-time updates on academic progress, attendance, and communication.</p>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerProduct">Product</h4>
+            <a href="#features" data-i18n="features">Features</a>
+            <a href="#about" data-i18n="howTitle">How It Works</a>
+            <a href="#auth" data-i18n="getStarted">Get Started</a>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerSupport">Support</h4>
+            <a href="#contact" data-i18n="contact">Contact Us</a>
+            <a href="#" id="footerHelpCenter">Help Center</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerCompany">Company</h4>
+            <a href="#about" data-i18n="about">About</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Abugida. All rights reserved.</span>
+          <span data-i18n="footerTagline">Made with care for parents and schools.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== AUTH PAGE ==================== -->
+  <div class="page page-auth" id="page-auth">
+    <div class="auth-page">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <button class="auth-back-btn" id="authBackBtn" aria-label="Go back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+          </button>
+          <div class="auth-card-header">
+            <a href="#home" class="brand" id="authBrandLink">
+              <div class="brand-logo">A</div>
+              <span class="brand-name">Abugida</span>
+            </a>
+            <h1 id="authTitle">Welcome back</h1>
+            <p id="authSubtitle">Sign in to your account to continue.</p>
+          </div>
+
+          <div class="auth-tabs">
+            <button class="auth-tab active" data-auth-tab="login">Sign In</button>
+            <button class="auth-tab" data-auth-tab="register">Register</button>
+          </div>
+
+          <!-- Login Panel -->
+          <div class="auth-tab-panel active" id="auth-login">
+            <div id="loginError" class="auth-error hidden"></div>
+            <form id="loginForm" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="loginIdentifier">Phone or Email</label>
+                <input type="text" id="loginIdentifier" class="form-input" placeholder="Enter phone or email" autocomplete="username" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Enter password" autocomplete="current-password" required>
+              </div>
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="rememberMe" class="custom-checkbox-input">
+                  <span class="custom-checkbox-box">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="custom-checkbox-label">Remember me for 7 days</span>
+                </label>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Forgot password?</a>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">Sign In</button>
+            </form>
+          </div>
+
+          <!-- Register Panel -->
+          <div class="auth-tab-panel" id="auth-register">
+            <!-- Steps Bar -->
+            <div class="register-steps-bar" id="registerStepsBar">
+              <div class="register-step-indicator active" data-step="1">
+                <div class="register-step-circle">1</div>
+                <span class="register-step-label">Info</span>
+              </div>
+              <div class="register-step-line"></div>
+              <div class="register-step-indicator" data-step="2">
+                <div class="register-step-circle">2</div>
+                <span class="register-step-label">Verify</span>
+              </div>
+              <div class="register-step-line"></div>
+              <div class="register-step-indicator" data-step="3">
+                <div class="register-step-circle">3</div>
+                <span class="register-step-label">Children</span>
+              </div>
+            </div>
+
+            <!-- Step 1: Personal Information -->
+            <div class="register-step active" data-register-step="1">
+              <div class="register-step-header">
+                <h2>Create your account</h2>
+                <p>Tell us about yourself to get started.</p>
+              </div>
+              <form id="infoForm" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="regFirstName">First Name <span class="required">*</span></label>
+                    <input type="text" id="regFirstName" class="form-input" placeholder="First name" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="regLastName">Last Name <span class="required">*</span></label>
+                    <input type="text" id="regLastName" class="form-input" placeholder="Last name" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="regPhone">Phone Number <span class="required">*</span></label>
+                  <div class="phone-input-wrapper">
+                    <span class="phone-prefix">+251</span>
+                    <input type="tel" id="regPhone" class="form-input phone-input" placeholder="9XXXXXXXX" required>
+                  </div>
+                  <div class="form-hint">Ethiopian mobile number</div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="regEmail">Email <span style="color:var(--color-text-tertiary)">(Optional)</span></label>
+                  <input type="email" id="regEmail" class="form-input" placeholder="Email address" autocomplete="email">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="regPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="regPassword" class="form-input" placeholder="Min 8 characters" autocomplete="new-password" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="regConfirmPassword">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm password" autocomplete="new-password" required>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-full btn-lg" id="continueToOtp">Continue</button>
+              </form>
+            </div>
+
+            <!-- Step 2: Phone Verification -->
+            <div class="register-step" data-register-step="2">
+              <div class="register-step-header">
+                <h2>Verify your phone</h2>
+                <p>We sent a code to <strong id="regPhoneDisplay"></strong></p>
+              </div>
+              <div class="otp-group" id="regOtpGroup">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="0" inputmode="numeric" autocomplete="one-time-code">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="1" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="2" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="3" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="4" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-input" data-otp-index="5" inputmode="numeric">
+              </div>
+              <div class="otp-timer" id="regOtpTimer"></div>
+              <button type="button" class="btn btn-primary btn-full btn-lg" id="verifyRegOtpBtn">Verify & Continue</button>
+              <button type="button" class="btn btn-ghost btn-full" id="regBackToInfo" style="margin-top:var(--space-3)">Change phone number</button>
+            </div>
+
+            <!-- Step 3: Children -->
+            <div class="register-step" data-register-step="3">
+              <div class="register-step-header">
+                <h2>Add your children</h2>
+                <p>Add at least one child to get started.</p>
+              </div>
+              <div id="childrenContainer"></div>
+              <button type="button" class="btn btn-secondary btn-full" id="addChildBtn" style="margin-bottom:var(--space-4)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add another child
+              </button>
+              <button type="button" class="btn btn-primary btn-full btn-lg" id="completeRegistrationBtn">Complete Registration</button>
+            </div>
+          </div>
+
+          <div class="auth-footer">
+            <span id="authFooterText">Don't have an account?</span>
+            <a href="#" id="authFooterLink">Create one</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FORGOT PASSWORD MODAL ==================== -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal-backdrop" id="forgotPasswordBackdrop"></div>
+    <div class="modal-panel" style="max-width:420px">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset Password</h3>
+        <button class="modal-close" id="forgotPasswordClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Step 1: Enter phone -->
+        <div id="forgotStep1">
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-5)">Enter the phone number associated with your account and we'll send you a verification code.</p>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <div class="phone-input-wrapper">
+              <span class="phone-prefix">+251</span>
+              <input type="tel" id="forgotPhone" class="form-input phone-input" placeholder="9XXXXXXXX" required>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotSendOtpBtn">Send Code</button>
+        </div>
+        <!-- Step 2: Enter OTP + new password -->
+        <div id="forgotStep2" class="hidden">
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-5)">Enter the code sent to <strong id="forgotPhoneDisplay"></strong> and your new password.</p>
+          <div class="otp-group" id="forgotOtpGroup">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="0" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="1" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="2" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="3" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="4" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-input" data-otp-index="5" inputmode="numeric">
+          </div>
+          <div class="otp-timer" id="forgotOtpTimer"></div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" id="forgotNewPassword" class="form-input" placeholder="Min 8 characters" autocomplete="new-password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="forgotConfirmPassword" class="form-input" placeholder="Confirm password" autocomplete="new-password">
+          </div>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotResetBtn">Reset Password</button>
+          <button type="button" class="btn btn-ghost btn-full" id="forgotBackBtn" style="margin-top:var(--space-3)">Back to phone</button>
+        </div>
+        <!-- Step 3: Success -->
+        <div id="forgotStep3" class="hidden" style="text-align:center;padding:var(--space-6) 0">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--color-success-light);color:var(--color-success);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2)">Password Reset Successfully</h3>
+          <p style="color:var(--color-text-secondary);margin-bottom:var(--space-6)">You can now sign in with your new password.</p>
+          <button type="button" class="btn btn-primary btn-full btn-lg" id="forgotDoneBtn">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD PAGE ==================== -->
+  <div class="page page-dashboard" id="page-dashboard">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <a href="#home" class="sidebar-brand">
+            <div class="sidebar-brand-logo">A</div>
+            <span class="sidebar-brand-name">Abugida</span>
+          </a>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="sidebar-section-label" data-i18n="sidebarMain">Main</div>
+          <a href="#" class="sidebar-link active" data-dashboard-page="overview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span data-i18n="overview">Overview</span>
+          </a>
+          <a href="#" class="sidebar-link" data-dashboard-page="children">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span data-i18n="myChildren">My Children</span>
+          </a>
+          <div class="sidebar-section-label" style="margin-top:var(--space-4)" data-i18n="sidebarAccount">Account</div>
+          <a href="#" class="sidebar-link" data-dashboard-page="settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span data-i18n="settings">Settings</span>
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user" id="sidebarUser">
+            <div class="avatar avatar-sm" id="sidebarAvatar">U</div>
+            <div class="sidebar-user-info">
+              <div class="sidebar-user-name" id="sidebarUserName">User</div>
+              <div class="sidebar-user-email" id="sidebarUserEmail">user@email.com</div>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-full" id="logoutBtn" style="margin-top:var(--space-2)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Sidebar Overlay -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <div class="dashboard-content">
+          <!-- Dashboard Header -->
+          <div class="dashboard-header">
+            <div class="dashboard-header-left">
+              <div style="display:flex;align-items:center;gap:var(--space-3)">
+                <button class="btn-icon" id="dashboardMenuToggle" style="display:none" aria-label="Menu">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <h1 class="dashboard-title" id="dashboardTitle">Overview</h1>
+              </div>
+              <p class="dashboard-subtitle" id="dashboardSubtitle"></p>
+            </div>
+          </div>
+
+          <!-- Overview Page -->
+          <div class="dashboard-page active" id="dashboardPage-overview">
+            <div class="welcome-card">
+              <h2 id="welcomeMessage">Hi</h2>
+              <p id="welcomeSubtext">Here are the list of your children.</p>
+            </div>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)">
+                <h3 class="heading-sm">My Children</h3>
+                <button class="btn btn-sm btn-secondary" id="overviewAddChildBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add Child
+                </button>
+              </div>
+              <div id="dashboardChildrenList"></div>
+            </div>
+          </div>
+
+          <!-- Children Page -->
+          <div class="dashboard-page" id="dashboardPage-children">
+            <div class="children-header">
+              <h2 class="heading-md" data-i18n="myChildren">My Children</h2>
+              <button class="btn btn-primary" id="childrenAddBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span data-i18n="addChild">Add Child</span>
+              </button>
+            </div>
+            <div id="childrenManagement"></div>
+          </div>
+
+          <!-- Settings Page -->
+          <div class="dashboard-page" id="dashboardPage-settings">
+            <h2 class="heading-md" style="margin-bottom:var(--space-6)">Settings</h2>
+            <div class="settings-section">
+              <div class="card">
+                <h3 class="heading-sm" style="margin-bottom:var(--space-6)">Profile Information</h3>
+                <form id="settingsForm" novalidate>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label" for="settingsFirstName">First Name</label>
+                      <input type="text" id="settingsFirstName" class="form-input">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="settingsLastName">Last Name</label>
+                      <input type="text" id="settingsLastName" class="form-input">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingsEmail">Email</label>
+                    <input type="email" id="settingsEmail" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="text" id="settingsPhone" class="form-input" disabled style="opacity:0.6">
+                    <div class="form-hint">Phone number cannot be changed</div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="saveSettingsBtn">Save Changes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL ==================== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel" id="modalPanel">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <button class="modal-close" id="modalClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST CONTAINER ==================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="js/config.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <!-- Help Center Overlay -->
+  <div class="modal-overlay" id="helpCenterModal">
+    <div class="modal-backdrop" id="helpCenterBackdrop"></div>
+    <div class="modal-panel" style="max-width:480px">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Help Center</h3>
+          <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-top:var(--space-1)">Get in touch with our support team</p>
+        </div>
+        <button class="modal-close" id="helpCenterClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+          <div class="help-contact-card">
+            <div class="help-contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="help-contact-label">Direct Line</div>
+              <a href="tel:+251910105852" class="help-contact-value">+251 9 1010 5852</a>
+            </div>
+          </div>
+          <div class="help-contact-card">
+            <div class="help-contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div style="min-width:0">
+              <div class="help-contact-label">Email</div>
+              <a href="mailto:cheetahdevelopments@gmail.com" class="help-contact-value" style="word-break:break-all">cheetahdevelopments@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Help Button -->
+  <div class="help-fab" id="helpFab">
+    <button class="help-fab-btn" id="helpFabBtn" aria-label="Help">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+    <div class="help-panel" id="helpPanel">
+      <div class="help-panel-header">
+        <h3>Need Help?</h3>
+        <button class="btn-icon" id="helpCloseBtn" aria-label="Close" style="width:28px;height:28px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="help-panel-desc">We're here to help you with anything you need.</p>
+      <div class="help-contact-card">
+        <div class="help-contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="help-contact-label">Direct Line</div>
+          <a href="tel:+251910105852" class="help-contact-value">+251 9 1010 5852</a>
+        </div>
+      </div>
+      <div class="help-contact-card">
+        <div class="help-contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="help-contact-label">Email</div>
+          <a href="mailto:cheetahdevelopments@gmail.com" class="help-contact-value">cheetahdevelopments@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

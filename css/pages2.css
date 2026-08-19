@@ -1,0 +1,449 @@
+
+/* ============================================================
+   9. AFRO-FUTURISM DECORATIVE ELEMENTS
+   ============================================================ */
+
+.hero { position: relative; }
+
+/* Digital Waveform Pattern */
+.waveform-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 3px,
+    var(--color-primary) 3px,
+    var(--color-primary) 4px
+  );
+  opacity: 0.06;
+  pointer-events: none;
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+}
+
+/* Bronze Shimmer — Subtle hover glow for cards */
+.bronze-shimmer {
+  transition: box-shadow var(--duration-normal) ease, transform var(--duration-normal) ease;
+}
+.bronze-shimmer:hover {
+  box-shadow:
+    0 12px 32px rgba(184, 115, 51, 0.3),
+    0 4px 12px rgba(184, 115, 51, 0.15),
+    0 0 0 1px rgba(184, 115, 51, 0.2);
+  transform: translateY(-6px);
+}
+
+/* ============================================================
+   13. DASHBOARD STAT ICONS — Premium
+   ============================================================ */
+.stat-card-icon .icon {
+  width: 28px;
+  height: 28px;
+  position: relative;
+}
+
+.icon-total-children .icon {
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+.icon-total-children .icon::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.icon-total-children .icon::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 6px;
+  border-radius: 6px 6px 0 0;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+}
+
+.icon-schools .icon {
+  border: 2px solid currentColor;
+  border-radius: 3px;
+}
+.icon-schools .icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.icon-grade-levels .icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon-grade-levels .icon::before,
+.icon-grade-levels .icon::after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+}
+.icon-grade-levels .icon span {
+  width: 60%;
+  height: 2px;
+  background: currentColor;
+}
+
+.icon-active-users .icon {
+  border: 2px solid currentColor;
+  border-radius: 4px;
+}
+.icon-active-users .icon::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 1px;
+}
+.icon-active-users .icon::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+/* ============================================================
+   14. LIVE SECTION BACKGROUNDS — Dynamic
+   ============================================================ */
+@keyframes animated-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes rotating-glow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes shimmer-pulse {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 10px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.section-bg-live-1 {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface-secondary) 0%,
+    #F5F0E8 25%,
+    var(--color-bg-elevated) 50%,
+    #F5F0E8 75%,
+    var(--color-surface-secondary) 100%
+  );
+  background-size: 400% 400%;
+  animation: animated-gradient 20s ease infinite;
+}
+
+.section-bg-live-2 {
+  position: relative;
+  overflow: hidden;
+}
+.section-bg-live-2::before,
+.section-bg-live-2::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 115, 51, 0.1) 0%, rgba(184, 115, 51, 0) 70%);
+  animation: drift 25s ease-in-out infinite;
+  z-index: 0;
+}
+.section-bg-live-2::before {
+  width: 350px;
+  height: 350px;
+  top: 10%;
+  left: 10%;
+}
+
+.section-bg-live-2::after {
+  width: 250px;
+  height: 250px;
+  bottom: 10%;
+  right: 10%;
+  animation-delay: -12s;
+}
+
+.section-bg-live-3 {
+  position: relative;
+  overflow: hidden;
+}
+.section-bg-live-3::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(184, 115, 51, 0.06) 0%,
+    rgba(184, 115, 51, 0.02) 40%,
+    rgba(184, 115, 51, 0) 70%
+  );
+  transform-origin: center;
+  animation: rotating-glow 30s linear infinite;
+}
+
+/* ============================================================
+   16. 3D HOVER EFFECT — Premium
+   ============================================================ */
+.has-3d-hover {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.has-3d-hover:hover {
+  transform: scale(1.03);
+}
+
+.hover-3d-child {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.has-3d-hover:hover .hover-3d-child {
+  transform: translateZ(24px) rotateX(0deg) rotateY(0deg);
+}
+
+/* ============================================================
+   17. DASHBOARD WIDGETS — Premium
+   ============================================================ */
+.dashboard-widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.dashboard-widget {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-normal) ease, transform var(--duration-normal) ease;
+}
+
+.dashboard-widget:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.dashboard-widget h3 {
+  margin-bottom: var(--space-3);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Academic Progress Widget */
+.academic-progress-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.academic-progress-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+}
+
+.academic-progress-card:hover {
+  border-color: var(--color-primary-subtle);
+  background: var(--color-surface);
+}
+
+.academic-progress-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.academic-grade {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.academic-status {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Attendance Widget */
+.attendance-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.attendance-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+}
+
+.attendance-card:hover {
+  border-color: var(--color-success-light);
+  background: var(--color-surface);
+}
+
+.attendance-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.attendance-percentage {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.attendance-status {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Communication Widget */
+.communication-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.communication-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+}
+
+.communication-item:hover {
+  border-color: var(--color-primary-subtle);
+  background: var(--color-surface);
+}
+
+.communication-icon {
+  color: var(--color-info);
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* Empty Widget State */
+.empty-widget-state {
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  color: var(--color-text-tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 160px;
+}
+
+.empty-widget-state h3 {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.empty-widget-state p {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  max-width: 260px;
+}
+
+/* Helper Classes */
+.flex-group-md {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ============================================================
+   18. RESPONSIVE — DASHBOARD
+   ============================================================ */
+@media (max-width: 768px) {
+  .dashboard-widgets-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .academic-progress-card, .attendance-card, .communication-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .academic-progress-score, .attendance-summary {
+    align-items: flex-start;
+  }
+  .academic-grade, .attendance-percentage {
+    font-size: var(--text-lg);
+  }
+}
