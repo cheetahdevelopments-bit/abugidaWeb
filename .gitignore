@@ -8,3 +8,13 @@ dist/
 build/
 coverage/
 .vscode/
+# ==================== PROJECT SPECIFIC ====================
+# Graphify output folder
+graphify_out/
+
+# School data (if private)
+schools.txt
+
+# Uploaded files
+uploads/
+tmp/
