@@ -14,6 +14,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // ==================== Database Connection ====================
@@ -41,7 +42,12 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false,
 }));
 app.use(compression());
-app.use(cors());
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' 
+        ? 'https://abugida.education' 
+        : 'http://localhost:3000',
+    credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // ==================== UNIVERSAL LOGGING MIDDLEWARE ====================
@@ -295,6 +301,20 @@ function getPlanDetails(planType) {
     };
     return plans[planType] || plans.monthly;
 }
+// ==================== ADMIN AUTH MIDDLEWARE ====================
+function requireAdmin(req, res, next) {
+    if (!req.session.adminId) {
+        return res.status(401).json({ success: false, message: 'Admin authentication required' });
+    }
+    next();
+}
+
+function requireSuperAdmin(req, res, next) {
+    if (!req.session.adminId || req.session.adminRole !== 'super_admin') {
+        return res.status(403).json({ success: false, message: 'Super admin access required' });
+    }
+    next();
+}
 
 // ==================== Chapa Payment Functions ====================
 async function initializeChapaPayment({ amount, email, firstName, lastName, phoneNumber, txRef, callbackUrl, returnUrl, planName }) {
@@ -358,8 +378,8 @@ async function verifyChapaPayment(txRef) {
     }
 }
 
-// ==================== SMS OTP Functions ====================
-async function sendSMSOTP(phone, otp) {
+// ==================== SMS FUNCTIONS ====================
+async function sendSMS(phone, text) {
     try {
         const response = await fetch('https://smsethiopia.com/api/sms/send', {
             method: 'POST',
@@ -369,7 +389,7 @@ async function sendSMSOTP(phone, otp) {
             },
             body: JSON.stringify({
                 msisdn: phone,
-                text: `Your Abugida verification code is: ${otp}. Valid for 5 minutes.`
+                text: text
             })
         });
 
@@ -380,12 +400,28 @@ async function sendSMSOTP(phone, otp) {
             throw new Error(data.message || 'Failed to send SMS');
         }
         
-        console.log(`📱 OTP sent to ${phone}: ${otp}`);
+        console.log(`📱 SMS sent to ${phone}`);
         return true;
     } catch (error) {
         console.error('SMS sending failed:', error);
         throw error;
     }
+}
+
+async function sendSMSOTP(phone, otp) {
+    return sendSMS(phone, `Your Abugida verification code is: ${otp}. Valid for 5 minutes.`);
+}
+
+async function sendPaymentSuccessSMS(phone, planName, amount, endDate) {
+    const formattedDate = endDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    const text = `Thank you for subscribing to Abugida ${planName} plan! Payment of ETB ${amount} received. Your subscription is active until ${formattedDate}.`;
+    
+    return sendSMS(phone, text);
 }
 
 // ==================== Routes ====================
@@ -1218,40 +1254,47 @@ app.get('/api/payment/verify/:txRef', async (req, res) => {
                 [chapaData.status, chapaData.reference, txRef]
             );
 
-            // If payment successful, create/update subscription
+                        // If payment successful, create/update subscription
+                        // If payment successful, create pending subscription
             if (chapaData.status === 'success') {
-                const { startDate, endDate } = calculateSubscriptionDates(transaction.plan_type);
+                const days = transaction.plan_type === 'monthly' ? 30 : 
+                             transaction.plan_type === 'quarterly' ? 90 : 180;
                 
-                // Check for existing active subscription
                 const existingSub = await pool.query(
-                    'SELECT id FROM subscriptions WHERE user_id = $1 AND status = $2',
-                    [req.session.userId, 'active']
+                    `SELECT id FROM subscriptions 
+                     WHERE user_id = $1 AND activation_status IN ('pending', 'active', 'paused')
+                     ORDER BY created_at DESC LIMIT 1`,
+                    [req.session.userId]
                 );
 
                 let subscription;
                 
                 if (existingSub.rows.length > 0) {
-                    // Extend existing subscription
                     const extResult = await pool.query(
                         `UPDATE subscriptions 
-                         SET end_date = $1, updated_at = CURRENT_TIMESTAMP
-                         WHERE id = $2
-                         RETURNING id, plan_name, plan_type, amount, status, start_date, end_date`,
-                        [endDate, existingSub.rows[0].id]
+                         SET plan_name = $1, plan_type = $2, amount = $3,
+                             activation_status = 'pending', status = 'pending',
+                             start_date = NULL, end_date = NULL,
+                             activated_at = NULL, paused_at = NULL,
+                             original_duration_days = $4, remaining_days = $4,
+                             updated_at = CURRENT_TIMESTAMP
+                         WHERE id = $5
+                         RETURNING id, plan_name, plan_type, amount, activation_status`,
+                        [transaction.plan_name, transaction.plan_type, transaction.amount, days, existingSub.rows[0].id]
                     );
                     subscription = extResult.rows[0];
                 } else {
-                    // Create new subscription
                     const subResult = await pool.query(
-                        `INSERT INTO subscriptions (user_id, plan_name, plan_type, amount, currency, status, start_date, end_date)
-                         VALUES ($1, $2, $3, $4, 'ETB', 'active', $5, $6)
-                         RETURNING id, plan_name, plan_type, amount, status, start_date, end_date`,
-                        [req.session.userId, transaction.plan_name, transaction.plan_type, transaction.amount, startDate, endDate]
+                        `INSERT INTO subscriptions 
+                         (user_id, plan_name, plan_type, amount, currency, status, activation_status,
+                          original_duration_days, remaining_days)
+                         VALUES ($1, $2, $3, $4, 'ETB', 'pending', 'pending', $5, $5)
+                         RETURNING id, plan_name, plan_type, amount, activation_status`,
+                        [req.session.userId, transaction.plan_name, transaction.plan_type, transaction.amount, days]
                     );
                     subscription = subResult.rows[0];
                 }
 
-                // Link transaction to subscription
                 await pool.query(
                     'UPDATE payment_transactions SET subscription_id = $1 WHERE tx_ref = $2',
                     [subscription.id, txRef]
@@ -1259,12 +1302,8 @@ app.get('/api/payment/verify/:txRef', async (req, res) => {
 
                 return res.json({
                     success: true,
-                    message: 'Payment verified successfully',
-                    transaction: {
-                        ...transaction,
-                        status: chapaData.status,
-                        chapa_ref_id: chapaData.reference
-                    },
+                    message: 'Payment verified. Subscription pending activation.',
+                    transaction: { ...transaction, status: chapaData.status, chapa_ref_id: chapaData.reference },
                     subscription: subscription
                 });
             }
@@ -1366,6 +1405,392 @@ app.get('/api/payment/transactions', async (req, res) => {
     }
 });
 
+// ==================== SUBSCRIPTION MANAGEMENT (ADMIN) ====================
+
+// Get all subscriptions with detailed info (for admin)
+app.get('/api/admin/subscriptions', requireAdmin, async (req, res) => {
+    try {
+        const { status, activation_status } = req.query;
+        
+        let query = `
+            SELECT 
+                s.*,
+                u.first_name, u.last_name, u.email, u.phone,
+                a.full_name as activated_by_name,
+                p.full_name as paused_by_name
+            FROM subscriptions s
+            JOIN users u ON u.id = s.user_id
+            LEFT JOIN admins a ON a.id = s.activated_by
+            LEFT JOIN admins p ON p.id = s.paused_by
+            WHERE 1=1
+        `;
+        const params = [];
+        
+        if (status) {
+            params.push(status);
+            query += ` AND s.status = $${params.length}`;
+        }
+        
+        if (activation_status) {
+            params.push(activation_status);
+            query += ` AND s.activation_status = $${params.length}`;
+        }
+        
+        query += ` ORDER BY s.created_at DESC`;
+        
+        const result = await pool.query(query, params);
+        res.json({ success: true, subscriptions: result.rows });
+        
+    } catch (error) {
+        console.error('Get admin subscriptions error:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch subscriptions' });
+    }
+});
+
+// Activate subscription (start countdown)
+app.post('/api/admin/subscriptions/:id/activate', requireAdmin, async (req, res) => {
+    try {
+        const subId = req.params.id;
+        const adminId = req.session.adminId;
+        const { duration_days } = req.body; // Optional: override duration
+        
+        const subResult = await pool.query('SELECT * FROM subscriptions WHERE id = $1', [subId]);
+        
+        if (subResult.rows.length === 0) {
+            return res.status(404).json({ success: false, message: 'Subscription not found' });
+        }
+        
+        const sub = subResult.rows[0];
+        
+        // If already active, don't reactivate
+        if (sub.activation_status === 'active') {
+            return res.status(400).json({ success: false, message: 'Subscription is already active' });
+        }
+        
+        const now = new Date();
+        let daysToUse = duration_days || sub.original_duration_days || sub.remaining_days || 30;
+        
+        // Calculate new end date based on remaining or specified duration
+        let endDate;
+        if (sub.activation_status === 'paused' && sub.remaining_days) {
+            // Resume from pause with remaining days
+            daysToUse = sub.remaining_days;
+        }
+        
+        endDate = new Date(now);
+        endDate.setDate(endDate.getDate() + daysToUse);
+        
+        await pool.query(
+            `UPDATE subscriptions 
+             SET activation_status = 'active',
+                 activated_at = $1,
+                 start_date = $1,
+                 end_date = $2,
+                 status = 'active',
+                 activated_by = $3,
+                 paused_at = NULL,
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = $4`,
+            [now, endDate, adminId, subId]
+        );
+        
+        // Log the action
+        console.log(`\n📋 SUBSCRIPTION ACTIVATED`);
+        console.log(`   ID: ${subId}`);
+        console.log(`   User: ${sub.user_id}`);
+        console.log(`   Duration: ${daysToUse} days`);
+        console.log(`   End Date: ${endDate.toISOString()}`);
+        console.log(`   Activated by: ${adminId}`);
+        
+        // Send SMS notification
+        try {
+            const userResult = await pool.query('SELECT phone, first_name FROM users WHERE id = $1', [sub.user_id]);
+            const userPhone = userResult.rows[0]?.phone;
+            
+            if (userPhone) {
+                const formattedDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                await sendSMS(userPhone, `Your Abugida ${sub.plan_name} subscription is now active! It will expire on ${formattedDate}.`);
+                console.log(`   📱 Activation SMS sent`);
+            }
+        } catch (smsError) {
+            console.error('   Failed to send SMS:', smsError.message);
+        }
+        
+        res.json({ success: true, message: 'Subscription activated successfully' });
+        
+    } catch (error) {
+        console.error('Activate subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to activate subscription' });
+    }
+});
+
+// Pause subscription
+app.post('/api/admin/subscriptions/:id/pause', requireAdmin, async (req, res) => {
+    try {
+        const subId = req.params.id;
+        const adminId = req.session.adminId;
+        const { reason } = req.body;
+        
+        const subResult = await pool.query('SELECT * FROM subscriptions WHERE id = $1', [subId]);
+        
+        if (subResult.rows.length === 0) {
+            return res.status(404).json({ success: false, message: 'Subscription not found' });
+        }
+        
+        const sub = subResult.rows[0];
+        
+        if (sub.activation_status !== 'active') {
+            return res.status(400).json({ success: false, message: 'Only active subscriptions can be paused' });
+        }
+        
+        // Calculate remaining days
+        const now = new Date();
+        const remainingMs = sub.end_date - now;
+        const remainingDays = Math.max(0, Math.ceil(remainingMs / (1000 * 60 * 60 * 24)));
+        
+        await pool.query(
+            `UPDATE subscriptions 
+             SET activation_status = 'paused',
+                 paused_at = $1,
+                 remaining_days = $2,
+                 status = 'paused',
+                 paused_by = $3,
+                 notes = COALESCE(notes, '') || CASE WHEN $4 IS NOT NULL THEN E'\nPaused: ' || $4 ELSE '' END,
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = $5`,
+            [now, remainingDays, adminId, reason || null, subId]
+        );
+        
+        console.log(`\n⏸️ SUBSCRIPTION PAUSED`);
+        console.log(`   ID: ${subId}`);
+        console.log(`   Remaining days preserved: ${remainingDays}`);
+        console.log(`   Paused by: ${adminId}`);
+        
+        res.json({ success: true, message: 'Subscription paused', remaining_days: remainingDays });
+        
+    } catch (error) {
+        console.error('Pause subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to pause subscription' });
+    }
+});
+
+// Reset subscription (restart countdown)
+app.post('/api/admin/subscriptions/:id/reset', requireAdmin, async (req, res) => {
+    try {
+        const subId = req.params.id;
+        const adminId = req.session.adminId;
+        const { duration_days } = req.body;
+        
+        const subResult = await pool.query('SELECT * FROM subscriptions WHERE id = $1', [subId]);
+        
+        if (subResult.rows.length === 0) {
+            return res.status(404).json({ success: false, message: 'Subscription not found' });
+        }
+        
+        const sub = subResult.rows[0];
+        const days = duration_days || sub.original_duration_days || 30;
+        const now = new Date();
+        const endDate = new Date(now);
+        endDate.setDate(endDate.getDate() + days);
+        
+        await pool.query(
+            `UPDATE subscriptions 
+             SET activation_status = 'active',
+                 activated_at = $1,
+                 start_date = $1,
+                 end_date = $2,
+                 status = 'active',
+                 remaining_days = $3,
+                 paused_at = NULL,
+                 activated_by = $4,
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = $5`,
+            [now, endDate, days, adminId, subId]
+        );
+        
+        console.log(`\n🔄 SUBSCRIPTION RESET`);
+        console.log(`   ID: ${subId}`);
+        console.log(`   New duration: ${days} days`);
+        console.log(`   Reset by: ${adminId}`);
+        
+        res.json({ success: true, message: 'Subscription reset', end_date: endDate });
+        
+    } catch (error) {
+        console.error('Reset subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to reset subscription' });
+    }
+});
+
+// Cancel subscription
+app.post('/api/admin/subscriptions/:id/cancel', requireAdmin, async (req, res) => {
+    try {
+        const subId = req.params.id;
+        const adminId = req.session.adminId;
+        
+        await pool.query(
+            `UPDATE subscriptions 
+             SET activation_status = 'cancelled',
+                 status = 'cancelled',
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = $1`,
+            [subId]
+        );
+        
+        console.log(`\n❌ SUBSCRIPTION CANCELLED`);
+        console.log(`   ID: ${subId}`);
+        console.log(`   Cancelled by: ${adminId}`);
+        
+        res.json({ success: true, message: 'Subscription cancelled' });
+        
+    } catch (error) {
+        console.error('Cancel subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to cancel subscription' });
+    }
+});
+
+// Bulk activate all pending subscriptions
+app.post('/api/admin/subscriptions/bulk/activate', requireAdmin, async (req, res) => {
+    try {
+        const adminId = req.session.adminId;
+        const { duration_days } = req.body;
+        
+        const pendingResult = await pool.query(
+            `SELECT id, original_duration_days FROM subscriptions WHERE activation_status = 'pending'`
+        );
+        
+        const now = new Date();
+        let activated = 0;
+        
+        for (const sub of pendingResult.rows) {
+            const days = duration_days || sub.original_duration_days || 30;
+            const endDate = new Date(now);
+            endDate.setDate(endDate.getDate() + days);
+            
+            await pool.query(
+                `UPDATE subscriptions 
+                 SET activation_status = 'active',
+                     activated_at = $1,
+                     start_date = $1,
+                     end_date = $2,
+                     status = 'active',
+                     activated_by = $3,
+                     updated_at = CURRENT_TIMESTAMP
+                 WHERE id = $4`,
+                [now, endDate, adminId, sub.id]
+            );
+            activated++;
+        }
+        
+        console.log(`\n📋 BULK ACTIVATION`);
+        console.log(`   Activated: ${activated} subscriptions`);
+        console.log(`   By: ${adminId}`);
+        
+        res.json({ success: true, message: `Activated ${activated} subscriptions`, count: activated });
+        
+    } catch (error) {
+        console.error('Bulk activate error:', error);
+        res.status(500).json({ success: false, message: 'Failed to bulk activate' });
+    }
+});
+
+// Manually add subscription for user
+app.post('/api/admin/subscriptions/manual', requireAdmin, async (req, res) => {
+    try {
+        const adminId = req.session.adminId;
+        const { user_id, plan_type, plan_name, amount, duration_days, activate_now } = req.body;
+        
+        if (!user_id || !plan_type) {
+            return res.status(400).json({ success: false, message: 'User and plan type required' });
+        }
+        
+        // Check user exists
+        const userCheck = await pool.query('SELECT id FROM users WHERE id = $1', [user_id]);
+        if (userCheck.rows.length === 0) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        
+        const plan = getPlanDetails(plan_type);
+        const finalAmount = amount || plan.amount;
+        const finalName = plan_name || plan.name;
+        const days = duration_days || (plan_type === 'monthly' ? 30 : plan_type === 'quarterly' ? 90 : 180);
+        
+        const now = new Date();
+        const endDate = new Date(now);
+        endDate.setDate(endDate.getDate() + days);
+        
+        const activationStatus = activate_now ? 'active' : 'pending';
+        const status = activate_now ? 'active' : 'pending';
+        
+        const result = await pool.query(
+            `INSERT INTO subscriptions 
+             (user_id, plan_name, plan_type, amount, currency, status, activation_status, 
+              start_date, end_date, original_duration_days, remaining_days, activated_by, notes)
+             VALUES ($1, $2, $3, $4, 'ETB', $5, $6, $7, $8, $9, $10, $11, $12)
+             RETURNING id`,
+            [
+                user_id, finalName, plan_type, finalAmount, status, activationStatus,
+                activate_now ? now : null, activate_now ? endDate : null, days,
+                activate_now ? days : null, activate_now ? adminId : null,
+                'Manual subscription added by admin'
+            ]
+        );
+        
+        console.log(`\n📋 MANUAL SUBSCRIPTION ADDED`);
+        console.log(`   ID: ${result.rows[0].id}`);
+        console.log(`   User: ${user_id}`);
+        console.log(`   Plan: ${finalName}`);
+        console.log(`   Amount: ETB ${finalAmount}`);
+        console.log(`   Status: ${activationStatus}`);
+        console.log(`   Added by: ${adminId}`);
+        
+        res.json({ success: true, message: 'Subscription added', subscription_id: result.rows[0].id });
+        
+    } catch (error) {
+        console.error('Manual subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to add subscription' });
+    }
+});
+
+// ==================== USER SUBSCRIPTION (CLIENT) ====================
+
+// Get user's current subscription (modified for activation_status)
+app.get('/api/subscription', async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ success: false, message: 'Not authenticated' });
+        }
+
+        const result = await pool.query(
+            `SELECT * FROM subscriptions 
+             WHERE user_id = $1 
+             ORDER BY created_at DESC 
+             LIMIT 1`,
+            [req.session.userId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.json({ success: true, subscription: null });
+        }
+
+        const subscription = result.rows[0];
+        
+        // If subscription is pending or paused, don't show end date
+        if (subscription.activation_status === 'pending') {
+            subscription.end_date = null;
+            subscription.message = 'Your subscription is ready and will be activated soon.';
+        } else if (subscription.activation_status === 'paused') {
+            subscription.end_date = null;
+            subscription.message = 'Your subscription is temporarily paused.';
+        }
+
+        res.json({ success: true, subscription });
+
+    } catch (error) {
+        console.error('Get subscription error:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch subscription' });
+    }
+});
+
 // ==================== WEBHOOK ROUTE ====================
 
 // Chapa Webhook (public endpoint — no auth required, but should validate)
@@ -1384,7 +1809,25 @@ app.post('/webhook', async (req, res) => {
         // Extract transaction reference
         const txRef = payload.tx_ref || payload.trx_ref;
         const chapaRefId = payload.reference || payload.ref_id;
-        const status = payload.status || payload.event;
+        
+        // IMPORTANT: Determine the correct status
+        // Chapa sends 'event' as 'charge.success' for successful payments
+        // But the payload might also have a 'status' field
+        let status = payload.status;
+        
+        // If status is not explicitly set, derive from the event type
+        if (!status) {
+            if (payload.event === 'charge.success') {
+                status = 'success';
+            } else if (payload.event === 'charge.failed' || payload.event === 'charge.cancelled') {
+                status = 'failed';
+            } else {
+                status = 'pending';
+            }
+        }
+        
+        console.log(`   📊 Derived status: ${status}`);
+        console.log(`   Event: ${payload.event}`);
 
         if (!txRef) {
             console.error('❌ No tx_ref in webhook payload');
@@ -1403,43 +1846,68 @@ app.post('/webhook', async (req, res) => {
         }
 
         const transaction = txResult.rows[0];
+        console.log(`   Found transaction: ${transaction.id}`);
+        console.log(`   Current status: ${transaction.status}`);
+        console.log(`   Phone in transaction: ${transaction.phone_number}`);
 
         // Update transaction status
         await pool.query(
             `UPDATE payment_transactions 
              SET status = $1, chapa_ref_id = $2, verified_at = CURRENT_TIMESTAMP, paid_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
              WHERE tx_ref = $3`,
-            [status === 'success' ? 'success' : status, chapaRefId, txRef]
+            [status, chapaRefId, txRef]
         );
+        console.log(`   ✅ Transaction status updated to: ${status}`);
 
         // If payment successful, create/update subscription
         if (status === 'success') {
-            const { startDate, endDate } = calculateSubscriptionDates(transaction.plan_type);
+            console.log('   💰 PAYMENT SUCCESS — Creating pending subscription...');
             
+            const days = transaction.plan_type === 'monthly' ? 30 : 
+                         transaction.plan_type === 'quarterly' ? 90 : 180;
+            
+            // Check if user already has a pending or active subscription
             const existingSub = await pool.query(
-                'SELECT id FROM subscriptions WHERE user_id = $1 AND status = $2',
-                [transaction.user_id, 'active']
+                `SELECT id FROM subscriptions 
+                 WHERE user_id = $1 AND activation_status IN ('pending', 'active', 'paused')
+                 ORDER BY created_at DESC LIMIT 1`,
+                [transaction.user_id]
             );
 
             let subscription;
             
             if (existingSub.rows.length > 0) {
+                // Update existing subscription to pending (if it was paused)
                 const extResult = await pool.query(
                     `UPDATE subscriptions 
-                     SET end_date = $1, updated_at = CURRENT_TIMESTAMP
-                     WHERE id = $2
+                     SET plan_name = $1, plan_type = $2, amount = $3,
+                         activation_status = 'pending',
+                         status = 'pending',
+                         start_date = NULL,
+                         end_date = NULL,
+                         activated_at = NULL,
+                         paused_at = NULL,
+                         original_duration_days = $4,
+                         remaining_days = $4,
+                         updated_at = CURRENT_TIMESTAMP
+                     WHERE id = $5
                      RETURNING id`,
-                    [endDate, existingSub.rows[0].id]
+                    [transaction.plan_name, transaction.plan_type, transaction.amount, days, existingSub.rows[0].id]
                 );
                 subscription = extResult.rows[0];
+                console.log(`   ✅ Existing subscription updated to pending: ${subscription.id}`);
             } else {
+                // Create new pending subscription
                 const subResult = await pool.query(
-                    `INSERT INTO subscriptions (user_id, plan_name, plan_type, amount, currency, status, start_date, end_date)
-                     VALUES ($1, $2, $3, $4, 'ETB', 'active', $5, $6)
+                    `INSERT INTO subscriptions 
+                     (user_id, plan_name, plan_type, amount, currency, status, activation_status, 
+                      original_duration_days, remaining_days)
+                     VALUES ($1, $2, $3, $4, 'ETB', 'pending', 'pending', $5, $5)
                      RETURNING id`,
-                    [transaction.user_id, transaction.plan_name, transaction.plan_type, transaction.amount, startDate, endDate]
+                    [transaction.user_id, transaction.plan_name, transaction.plan_type, transaction.amount, days]
                 );
                 subscription = subResult.rows[0];
+                console.log(`   ✅ New pending subscription created: ${subscription.id}`);
             }
 
             // Link transaction to subscription
@@ -1448,11 +1916,34 @@ app.post('/webhook', async (req, res) => {
                 [subscription.id, txRef]
             );
 
-            // Update webhook event as processed
+            // Mark webhook as processed
             await pool.query(
                 `UPDATE webhook_events SET processed_at = CURRENT_TIMESTAMP, status = 'processed' WHERE tx_ref = $1`,
                 [txRef]
             );
+            
+            // Send SMS notification
+            try {
+                const userResult = await pool.query(
+                    'SELECT phone, first_name FROM users WHERE id = $1',
+                    [transaction.user_id]
+                );
+                
+                const userPhone = userResult.rows[0]?.phone;
+                const firstName = userResult.rows[0]?.first_name || '';
+                
+                if (userPhone) {
+                    const text = `Dear ${firstName}, your Abugida ${transaction.plan_name} payment has been received. Your subscription will be activated soon.`;
+                    await sendSMS(userPhone, text);
+                    console.log(`   📱 Payment confirmation SMS sent to ${userPhone}`);
+                }
+            } catch (smsError) {
+                console.error('   ❌ Failed to send SMS:', smsError.message);
+            }
+            
+            console.log('   ✅ SUBSCRIPTION MARKED AS PENDING');
+        } else {
+            console.log(`   ⚠️ Payment not successful (status: ${status})`);
         }
 
         console.log('✅ Webhook processed successfully');
@@ -1460,6 +1951,7 @@ app.post('/webhook', async (req, res) => {
 
     } catch (error) {
         console.error('❌ Webhook processing error:', error);
+        console.error('   Stack:', error.stack);
         res.status(500).json({ success: false, message: 'Webhook processing failed' });
     }
 });
